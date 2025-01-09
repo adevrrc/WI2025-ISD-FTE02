@@ -18,7 +18,10 @@ class Course:
             credit_hours (int): The number of credit hours.
 
         Raises:
-            TODO
+            ValueError: Raised when the name argument value contains no 
+                non-whitespace characters, the department argument value 
+                is not a Department type, or the credit_hours argument 
+                value is not an integer type.
         """
 
         name = name.strip()
@@ -26,9 +29,8 @@ class Course:
         if len(name) == 0:
             raise ValueError("Name cannot be blank.")
         
-        # TODO: need to speak to Damien about this.
-        # if department not in Department:
-        #     raise ValueError("Department is not valid.")
+        if not isinstance(department, Department):
+            raise ValueError("Department is not valid.")
 
         if not isinstance(credit_hours, int):
             raise ValueError("Credit Hours must be numeric.")
@@ -39,23 +41,51 @@ class Course:
 
     @property
     def name(self) -> str:
-        """TODO"""
+        """Gets the name of the course.
+
+        Returns:
+            str: The name of the course.
+        """
 
         return self.__name
     
     @property
     def department(self) -> Department:
+        """Gets the department the course is delivered within.
+
+        Returns:
+            Department: The faculty department the course is managed 
+                from.
+        """
+
         return self.__department
     
     @property
     def credit_hours(self) -> int:
+        """Gets the number of credit hours for this course.
+
+        Credit hours typically correlate with the number of 
+        instructional hours of a course.
+
+        Returns:
+            int: number of credit hours for this course.
+        """
+
         return self.__credit_hours
     
     def __str__(self) -> str:
-        """TODO"""
+        """Returns the "informal" or nicely printable string 
+        representation of the object.
 
-        string_representation = f"Course: {self.name}\n" \
-            f"Department: {self.department.name.replace("_", " ").title()}\n" \
+        Returns:
+            str: The "informal" or nicely printable string 
+                representation of the object.
+        """
+
+        string_representation = ( 
+            f"Course: {self.name.title()}\n"
+            f"Department: {self.department.name.replace("_", " ").title()}\n" 
             f"Credit Hours: {self.credit_hours}"
+        )
 
         return string_representation
