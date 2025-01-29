@@ -1,11 +1,18 @@
-class Employee:
+from abc import ABC, abstractmethod
 
+class Employee(ABC):
+
+    @abstractmethod
     def __init__(self, employee_id: int):
         self.__employee_id = employee_id
 
     @property
     def employee_id(self) -> int:
         return self.__employee_id
+
+    @abstractmethod
+    def calculate_pay(self) -> float:
+        pass
     
     def __str__(self) -> str:
         return "Employee"
@@ -19,35 +26,41 @@ class HourlyEmployee(Employee):
         self.__hours = hours
         self.__rate = rate
 
+    def calculate_pay(self) -> float:
+        return self.__hours * self.__rate
+
     def __str__(self):
         # HourlyEmployee
         return "Hourly" + super().__str__()
 
 def main():
-    employee = Employee(123)
-    print(employee.employee_id)
+    #employee = Employee(123)
+    #print(employee.employee_id)
 
-    print(employee)
+    #print(employee)
 
     employee = HourlyEmployee(234, 40, 10)
-    print(employee.employee_id)
 
-    print(type(employee))
+    print(employee.calculate_pay())
 
-    print(isinstance(employee, HourlyEmployee))
-    print(isinstance(employee, Employee))
+    #print(employee.employee_id)
+
+    #print(type(employee))
+
+    #print(isinstance(employee, HourlyEmployee))
+    #print(isinstance(employee, Employee))
 
     # These statements would produce errors
     # print(employee.__employee_id)
     # print(employee.__hours)
     # print(employee.__rate)
 
-    print(employee)
+    #print(employee)
 
-    output = str(employee)
-    print(output)
+    #output = str(employee)
+    #print(output)
 
-    print(repr(employee))
+    #print(repr(employee))
 
 if __name__ == "__main__":
     main()
