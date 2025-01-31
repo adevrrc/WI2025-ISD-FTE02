@@ -21,12 +21,17 @@ class Course(ABC):
             department (Department): The department the course is 
                 delivered.
             credit_hours (int): The number of credit hours.
+            capacity (int): The number of students that may enroll in 
+                the course.
+            current_enrollment (int): The number of students currently 
+                in the course.
 
         Raises:
             ValueError: Raised when the name argument value contains no 
                 non-whitespace characters, the department argument value 
-                is not a Department type, or the credit_hours argument 
-                value is not an integer type.
+                is not a Department type, or the credit_hours, 
+                capacity, or current_enrollment argument value is not an
+                integer type.
         """
 
         name = name.strip()
@@ -89,8 +94,6 @@ class Course(ABC):
 
         return self.__credit_hours
     
-    # TODO
-    # Update return documentation.
     @abstractmethod
     def enroll_student(self, student: Student) -> str:
         """Enrolls the specified student in this course.
@@ -99,8 +102,10 @@ class Course(ABC):
             student (Student): The student being add to this course.
         
         Returns:
-            str: The enrollment status.
+            str: A confirmation message indicating the enrollment 
+                status.
         """
+        
         pass
 
     def __str__(self) -> str:
