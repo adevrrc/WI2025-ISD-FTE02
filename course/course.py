@@ -4,11 +4,16 @@ __author__ = "Damien Altenburg"
 __version__ = "1.1.2025"
 
 from department.department import Department
+from student.student import Student
+from abc import ABC, abstractmethod
 
-class Course:
+class Course(ABC):
     """Represents a course at an educational institution."""
 
-    def __init__(self, name: str, department: Department, credit_hours: int):
+    @abstractmethod
+    def __init__(self, name: str, department: Department, 
+                 credit_hours: int, capacity: int, 
+                 current_enrollment: int):
         """Initializes a new instance of the Course class.
 
         Args:
@@ -34,10 +39,21 @@ class Course:
 
         if not isinstance(credit_hours, int):
             raise ValueError("Credit Hours must be numeric.")
+        
+        if not isinstance(capacity, int):
+            raise ValueError("Capacity must be numeric.")
+        
+        if not isinstance(current_enrollment, int):
+            raise ValueError("Enrollment must be numeric.")
 
+        # Private "__"
         self.__name = name
         self.__department = department
         self.__credit_hours = credit_hours
+
+        # Protected "_"
+        self._capacity = capacity
+        self._current_enrollment = current_enrollment        
 
     @property
     def name(self) -> str:
@@ -73,6 +89,20 @@ class Course:
 
         return self.__credit_hours
     
+    # TODO
+    # Update return documentation.
+    @abstractmethod
+    def enroll_student(self, student: Student) -> str:
+        """Enrolls the specified student in this course.
+        
+        Args:
+            student (Student): The student being add to this course.
+        
+        Returns:
+            str: The enrollment status.
+        """
+        pass
+
     def __str__(self) -> str:
         """Returns the "informal" or nicely printable string 
         representation of the object.
