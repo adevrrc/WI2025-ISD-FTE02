@@ -54,16 +54,17 @@ def main():
 
         ### DECORATOR ###
     
+    print("\n", "*" * 40, "\n", sep="")
+
     student = students[0]
     print(student)
-    print(student.grade_point_average)
+    print(f"Initial GPA: {student.grade_point_average}")
 
     student = CouncilDecorator(student)
-    print(student.grade_point_average)
+    print(f"On Student Council GPA: {student.grade_point_average}")
 
     student = VolunteerDecorator(student)
-    print(student.grade_point_average)
-
+    print(f"On Student Council & Volunteer GPA: {student.grade_point_average}")
 
 if __name__ == "__main__":
     main()
