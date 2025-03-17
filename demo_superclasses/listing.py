@@ -35,7 +35,8 @@ class Listing(QMainWindow):
 
         self.student_table = QTableWidget()
 
-        # Adjusting layout to make widgets centered in the middle column of a 3-column layout
+        # Adjusting layout to make widgets centered in the middle column
+        # of a 3-column layout
         layout.setColumnStretch(0, 1)
         layout.setColumnStretch(2, 1)
         

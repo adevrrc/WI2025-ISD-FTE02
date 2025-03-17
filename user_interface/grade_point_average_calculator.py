@@ -38,5 +38,6 @@ class GradePointAverageCalculator():
         Emits a signal with the student number and calculated gpa when 
         complete.
         """
-        #Formula: 
-        # ((grade1 * cr_hours1) + (grade2 * cr_hours2) + etc) / sum(cr_hours#)
+        # Formula: 
+        # ((grade1 * cr_hours1) + (grade2 * cr_hours2) + etc) / 
+        # sum(cr_hours#)
