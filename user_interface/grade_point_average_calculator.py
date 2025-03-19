@@ -13,6 +13,9 @@ class GradePointAverageCalculator(GPAWindow):
     
     Inherited from GPAWindow which provides the gui design.
     """
+
+    # str: student_number, float: gpa
+    new_gpa = Signal(str, float)
     
     def __init__(self, student_number: str, name: str):
         """Initializes the window widgets and displays received data.
@@ -37,11 +40,20 @@ class GradePointAverageCalculator(GPAWindow):
         self.credit_edit_2.textChanged.connect(self.__enable_button)
         self.credit_edit_3.textChanged.connect(self.__enable_button)
 
+        self.grade_select_1.currentIndexChanged.connect(self.__on_current_index_changed)
+        self.grade_select_2.currentIndexChanged.connect(self.__on_current_index_changed)
+        self.grade_select_3.currentIndexChanged.connect(self.__on_current_index_changed)
+                                                        
+    def __on_current_index_changed(self):
+        self.grade_point_average_label.setText("")
+
     def __enable_button(self):
         """Validates the input fields and if valid, enables the 
         Calculate button.
         """
         
+        self.grade_point_average_label.setText("")
+
         is_credit_hours_entered = (self.credit_edit_1.text() != ""
                                    and self.credit_edit_2.text() != ""
                                    and self.credit_edit_3.text() != "")
@@ -99,4 +111,17 @@ class GradePointAverageCalculator(GPAWindow):
 
         grade_point_average = 0 if total_credit_hours == 0 else total_grades / total_credit_hours
 
+        text_color = "#000"
+        font_weight = "normal"
+
+        if grade_point_average <= 2:
+            text_color = "#DC143C"
+            font_weight = "bold"
+
+        self.grade_point_average_label.setStyleSheet(f"color: {text_color};"
+            f"font-weight: {font_weight};")
+
         self.grade_point_average_label.setText(f"{grade_point_average:.2f}")
+
+        # Raise the event (emit)
+        self.new_gpa.emit(self.student_number_label.text(), grade_point_average)

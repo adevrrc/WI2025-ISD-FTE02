@@ -26,6 +26,7 @@ class StudentListing(Listing):
         self.students.append(Student("Freddie Jeffries", Department.MEDICINE))
         self.students.append(Student("Paul Thompson", Department.COMPUTER_SCIENCE))
         self.students.append(Student("Suzanne Marchand", Department.EDUCATION))
+        self.students.append(Student("Damien Altenburg", Department.COMPUTER_SCIENCE))
         
         self.student_table.setRowCount(len(self.students))
 
@@ -69,8 +70,12 @@ class StudentListing(Listing):
 
         calculator_window = GradePointAverageCalculator(student_number, name)
 
+        # Subscribe to the event (Signal)
+        calculator_window.new_gpa.connect(self.__update_grade_point_average)
+
         calculator_window.exec_()
 
+    @Slot(str, float)
     def __update_grade_point_average(self, student_number: str, grade_point_average: float):
         """Updates the GPA value based on updates made in another 
         window. The other window sends a signal upon updating, and this 
@@ -81,4 +86,7 @@ class StudentListing(Listing):
             gpa (float): The updated gpa value.
         """
 
-        pass
+        for row in range(self.student_table.rowCount()):
+            if self.student_table.item(row, 0).text() == student_number:
+                self.student_table.item(row, 2).setText(f"{grade_point_average:.2f}")
+                break
